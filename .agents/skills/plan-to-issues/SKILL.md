@@ -15,7 +15,11 @@ in a shell this agent can run.
    One issue per unit of work.
 3. **Stop and show the table to the human.** Publish nothing until they approve it.
 4. Ask the human what every issue here must carry (fields, labels, wording), unless it is
-   already written down in this session or in the repo.
+   already written down in this session or in the repo. Written down so far (morning-digest):
+   - First line: `Source: plan.md § <n>`, the plan's numbered section.
+   - Label `plan:<plan name>` from the plan's frontmatter, e.g. `plan:morning-digest`.
+   - Sections `## Scope`, `## Done when` (the plan's line, checkable), `## Blocked by` (`#n` or `—`).
+   - An issue whose done-when needs someone else (a reviewer looking) stays open until they have.
 5. Create each issue in dependency order, so blocked-by can cite real numbers:
 
    ```sh

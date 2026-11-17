@@ -1,0 +1,48 @@
+# Publishes the review preview to GitHub Pages (plan §§ 3-4, ADR 0003). The HTML is built here and
+# shipped as a Pages artifact, so no preview is ever committed. Run again with an empty marker to
+# upload the clean copy over the same link.
+name: preview
+on:
+  workflow_dispatch:
+    inputs:
+      marker:
+        description: LANE_MARKER for the banner. Leave empty for the clean copy.
+        required: false
+        default: ''
+      night:
+        description: Night to save
+        required: false
+        default: '2026-10-28'
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.18.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: scripts/preview.sh "$NIGHT" _site/index.html
+        env:
+          LANE_MARKER: ${{ inputs.marker }}
+          NIGHT: ${{ inputs.night }}
+      - run: grep -o '<span class="marker">[^<]*</span>' _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-11-17
 ---
 
 # Morning digest
@@ -77,3 +78,21 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | Blocked by | Worker | Closed |
+|---|-------|-----------|--------|--------|
+| 1 | Digest types: DigestRow and readNight signature | — | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 2 | Run log reader: readNight | #1 | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 3 | Digest page: GET /digest/:night | #1 | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 4 | Digest JSON: GET /api/digest/:night | #1 | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 5 | Board link: nights link to their digest with counts | #1 | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 6 | Route tests for digest page and JSON | #1 | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 7 | Preview for review: publish /digest/2026-10-28 | #2, #3 | claude-code · opus-5.5 · medium | 2026-11-17 |
+| 8 | Clean up: re-upload preview without the lane marker | #7 | claude-code · opus-5.5 · medium | 2026-11-17 |
+
+#7 was closed once when the link was sent, before the reviewer had looked, and reopened. It
+closed again after the review was in. The preview is built by `scripts/preview.sh` in the
+`preview` workflow and shipped as a Pages artifact, so it was never committed.
+

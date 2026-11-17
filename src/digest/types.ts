@@ -27,6 +27,8 @@ export type DigestRow = {
 export type Night = {
   night: string;
   rows: DigestRow[];
+  // Lines per status across the night, for the board's ok / retry / fail counts.
+  counts: Record<RunStatus, number>;
   badLines: number;
 };
 
